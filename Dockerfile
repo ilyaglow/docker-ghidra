@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -y wget --no-install-recommends \
     && unzip ghidra.zip \
     && mv ghidra_${VERSION} /ghidra \
     && chmod +x /ghidra/ghidraRun \
+    && useradd ghidra \
     && echo "===> Clean up unnecessary files..." \
     && apt-get purge -y --auto-remove wget \
     && apt-get clean \
@@ -20,5 +21,7 @@ RUN apt-get update && apt-get install -y wget --no-install-recommends \
 WORKDIR /ghidra
 
 COPY entrypoint.sh /entrypoint.sh
+
+USER ghidra
 
 ENTRYPOINT ["/entrypoint.sh"]
